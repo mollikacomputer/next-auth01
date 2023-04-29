@@ -1,15 +1,28 @@
 import Head from "next/head";
-import Layout from "./layout/layout";
 
+import { useSession, signIn, signOut } from "next-auth/react";
 const login = () => {
+  const { data: session } = useSession();
+  if (session) {
     return (
-        <Layout>
-            <Head>
-                <title> Login </title>
-            </Head>
-            <h2 className="text-3xl">Login Page</h2>
-        </Layout>
+      <div>
+        Welcome, {session.user.email}
+        <button className="btn btn-success" onClick={() => signOut()}>
+          {" "}
+          Sign Out{" "}
+        </button>
+      </div>
     );
+  } else {
+    return (
+      <div>
+        <p> You are not signin </p>
+        <button className="btn btn-success" onClick={() => signIn()}>
+          Sign In
+        </button>
+      </div>
+    );
+  }
 };
 
 export default login;
