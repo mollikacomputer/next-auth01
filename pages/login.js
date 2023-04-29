@@ -1,15 +1,17 @@
 import Head from "next/head";
 
 import { useSession, signIn, signOut } from "next-auth/react";
+
 const login = () => {
   const { data: session } = useSession();
+  console.log(session);
   if (session) {
     return (
       <div>
-        Welcome, {session.user.email}
+        Welcome,{session.user.name}, {session.user.email},
+        <img src={session.user.image} alt="image" />
         <button className="btn btn-success" onClick={() => signOut()}>
-          {" "}
-          Sign Out{" "}
+          Sign Out
         </button>
       </div>
     );
